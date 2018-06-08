@@ -5,6 +5,8 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 
@@ -13,13 +15,23 @@ import com.birdjunior.moviesearch.databinding.ActivitySearchBinding;
 
 public class SearchActivity extends AppCompatActivity {
 
-    ActivitySearchBinding binding;
+    private ActivitySearchBinding binding;
+    private SearchViewModel viewModel;
+    private ResultsArrayAdapter resultsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new SearchViewModel(getResources(), SearchViewModel.SEARCH_START);
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
-        binding.setViewModel(new SearchViewModel(getResources(), SearchViewModel.SEARCH_START));
+        binding.setViewModel(viewModel);
+
+        // Set up RecyclerView and its adapter
+        resultsAdapter = new ResultsArrayAdapter();
+        RecyclerView results = binding.resultsRecyclerView;
+        results.setAdapter(resultsAdapter);
+        results.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
