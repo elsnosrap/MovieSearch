@@ -2,4 +2,6 @@
     <string name="app_name">Movie Search</string>
     <string name="search_hint">Enter search terms</string>
     <string name="search">Search</string>
+    <string name="search_start_hint">Click the search icon to start.</string>
+    <string name="no_results">No results found, try again!</string>
 </resources>
