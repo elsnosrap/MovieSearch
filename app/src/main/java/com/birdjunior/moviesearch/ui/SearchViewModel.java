@@ -5,6 +5,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.annotation.IntDef;
 
+import com.birdjunior.moviesearch.BR;
 import com.birdjunior.moviesearch.R;
 
 import java.lang.annotation.Retention;
@@ -26,9 +27,14 @@ public class SearchViewModel extends BaseObservable {
     private int emptyState;
     private Resources resources;
 
-    public SearchViewModel(Resources resources, @EmptyState int state) {
+    SearchViewModel(Resources resources, @EmptyState int state) {
         this.resources = resources;
         emptyState = state;
+    }
+
+    void setEmptyState(@EmptyState int emptyState) {
+        this.emptyState = emptyState;
+        notifyPropertyChanged(BR.hintText);
     }
 
     @Bindable

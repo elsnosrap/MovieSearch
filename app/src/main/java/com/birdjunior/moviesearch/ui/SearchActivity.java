@@ -79,6 +79,6 @@ public class SearchActivity extends AppCompatActivity implements SearchStore.Dat
 
     @Override
     public void onNoResults() {
-        Log.v("TAG", "No results!");
+        viewModel.setEmptyState(SearchViewModel.SEARCH_NO_RESULTS);
     }
 }
