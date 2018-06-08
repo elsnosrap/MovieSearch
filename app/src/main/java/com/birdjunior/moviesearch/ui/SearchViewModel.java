@@ -19,6 +19,7 @@ public class SearchViewModel extends BaseObservable {
     @Retention(RetentionPolicy.SOURCE)
     @interface EmptyState {
     }
+
     static final int NOT_EMPTY = 0;
     static final int SEARCH_START = 1;
     static final int SEARCH_NO_RESULTS = 2;
@@ -36,11 +37,12 @@ public class SearchViewModel extends BaseObservable {
     void setEmptyState(@EmptyState int emptyState) {
         this.emptyState = emptyState;
         notifyPropertyChanged(BR.hintText);
-        notifyPropertyChanged(BR.noResultsVisibility);
+        notifyPropertyChanged(BR.hintTextVisibility);
+        notifyPropertyChanged(BR.recyclerVisibility);
     }
 
     @Bindable
-    public int getNoResultsVisibility() {
+    public int getHintTextVisibility() {
         switch (emptyState) {
             case SEARCH_NO_RESULTS:
             case SEARCH_START:
@@ -48,6 +50,17 @@ public class SearchViewModel extends BaseObservable {
 
             default:
                 return View.GONE;
+        }
+    }
+
+    @Bindable
+    public int getRecyclerVisibility() {
+        switch (emptyState) {
+            case NOT_EMPTY:
+                return View.VISIBLE;
+
+            default:
+                return View.INVISIBLE;
         }
     }
 

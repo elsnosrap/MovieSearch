@@ -63,6 +63,8 @@ public class SearchActivity extends AppCompatActivity implements SearchStore.Dat
                 public boolean onQueryTextChange(String newText) {
                     if (!TextUtils.isEmpty(newText) && newText.length() > 2) {
                         searchStore.performSearch(newText);
+                    } else {
+                        viewModel.setEmptyState(SearchViewModel.SEARCH_START);
                     }
                     return true;
                 }
@@ -74,6 +76,8 @@ public class SearchActivity extends AppCompatActivity implements SearchStore.Dat
     @Override
     public void onItems(@NonNull List<Result> results) {
         viewModel.setEmptyState(SearchViewModel.NOT_EMPTY);
+        resultsAdapter.clear();
+        resultsAdapter.add(results);
     }
 
     @Override
