@@ -21,21 +21,16 @@ import java.util.List;
 
 public class SearchActivity extends AppCompatActivity implements SearchStore.DataListener {
 
-    private ActivitySearchBinding binding;
     private SearchViewModel viewModel;
     private ResultsArrayAdapter resultsAdapter;
-    private SearchStore searchStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new SearchViewModel(getResources(), SearchViewModel.SEARCH_START);
+        viewModel = new SearchViewModel(this, SearchViewModel.SEARCH_START, this);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
+        ActivitySearchBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         binding.setViewModel(viewModel);
-
-        // Set up SearchStore to be used for searching
-        searchStore = new SearchStore(this, this);
 
         // Set up RecyclerView and its adapter
         resultsAdapter = new ResultsArrayAdapter();
@@ -61,11 +56,7 @@ public class SearchActivity extends AppCompatActivity implements SearchStore.Dat
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    if (!TextUtils.isEmpty(newText) && newText.length() > 2) {
-                        searchStore.performSearch(newText);
-                    } else {
-                        viewModel.setEmptyState(SearchViewModel.SEARCH_START);
-                    }
+                    viewModel.performQuery(newText);
                     return true;
                 }
             });
@@ -75,13 +66,12 @@ public class SearchActivity extends AppCompatActivity implements SearchStore.Dat
 
     @Override
     public void onItems(@NonNull List<Result> results) {
-        viewModel.setEmptyState(SearchViewModel.NOT_EMPTY);
         resultsAdapter.clear();
         resultsAdapter.add(results);
     }
 
     @Override
     public void onNoResults() {
-        viewModel.setEmptyState(SearchViewModel.SEARCH_NO_RESULTS);
+        // No-op, view model handles this for us
     }
 }

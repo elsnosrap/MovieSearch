@@ -1,18 +1,24 @@
 package com.birdjunior.moviesearch.ui;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.birdjunior.moviesearch.BR;
 import com.birdjunior.moviesearch.R;
+import com.birdjunior.moviesearch.models.Result;
+import com.birdjunior.moviesearch.network.SearchStore;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.List;
 
-public class SearchViewModel extends BaseObservable {
+public class SearchViewModel extends BaseObservable implements SearchStore.DataListener {
 
     // Custom interface to define search state
     @IntDef({NOT_EMPTY, SEARCH_START, SEARCH_NO_RESULTS, LOADING, ERROR})
@@ -28,10 +34,14 @@ public class SearchViewModel extends BaseObservable {
 
     private int emptyState;
     private Resources resources;
+    private SearchStore searchStore;
+    private SearchStore.DataListener listener;
 
-    SearchViewModel(Resources resources, @EmptyState int state) {
-        this.resources = resources;
+    SearchViewModel(Context context, @EmptyState int state, SearchStore.DataListener listener) {
+        resources = context.getResources();
         emptyState = state;
+        this.listener = listener;
+        searchStore = new SearchStore(this, context);
     }
 
     void setEmptyState(@EmptyState int emptyState) {
@@ -39,6 +49,14 @@ public class SearchViewModel extends BaseObservable {
         notifyPropertyChanged(BR.hintText);
         notifyPropertyChanged(BR.hintTextVisibility);
         notifyPropertyChanged(BR.recyclerVisibility);
+    }
+
+    void performQuery(String query) {
+        if (!TextUtils.isEmpty(query) && query.length() > 2) {
+            searchStore.performSearch(query);
+        } else {
+            setEmptyState(SearchViewModel.SEARCH_START);
+        }
     }
 
     @Bindable
@@ -77,4 +95,17 @@ public class SearchViewModel extends BaseObservable {
                 return null;
         }
     }
+
+    @Override
+    public void onItems(@NonNull List<Result> results) {
+        setEmptyState(NOT_EMPTY);
+        listener.onItems(results);
+    }
+
+    @Override
+    public void onNoResults() {
+        setEmptyState(SEARCH_NO_RESULTS);
+        listener.onNoResults();
+    }
+
 }
