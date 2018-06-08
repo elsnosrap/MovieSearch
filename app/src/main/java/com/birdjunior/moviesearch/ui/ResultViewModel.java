@@ -20,4 +20,8 @@ public class ResultViewModel extends BaseObservable {
     public int getTitleVisibility() {
         return TextUtils.isEmpty(result.getTitle()) ? View.GONE : View.VISIBLE;
     }
+
+    public String getPoster() {
+        return result.getPoster();
+    }
 }

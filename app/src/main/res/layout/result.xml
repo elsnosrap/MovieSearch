@@ -13,29 +13,33 @@
         android:id="@+id/result_view"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:paddingBottom="10dp">
+        android:paddingBottom="15dp">
     
         <ImageView
             android:id="@+id/thumbnail"
             android:layout_width="match_parent"
             android:layout_height="225dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             android:src="@drawable/placeholder"
             android:contentDescription="@{viewModel.title}"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:imageUrl="@{viewModel.poster}"/>
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="3dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{viewModel.title}"
             android:visibility="@{viewModel.titleVisibility}"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="@id/thumbnail"
+            app:layout_constraintStart_toStartOf="@id/thumbnail"
             app:layout_constraintTop_toBottomOf="@id/thumbnail"
             tools:text="The Big Lebowski"/>
 
