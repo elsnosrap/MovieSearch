@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 
 import com.birdjunior.moviesearch.R;
@@ -20,7 +19,7 @@ import com.birdjunior.moviesearch.network.SearchStore;
 
 import java.util.List;
 
-public class SearchActivity extends AppCompatActivity implements SearchStore.DataListener{
+public class SearchActivity extends AppCompatActivity implements SearchStore.DataListener {
 
     private ActivitySearchBinding binding;
     private SearchViewModel viewModel;
@@ -74,7 +73,7 @@ public class SearchActivity extends AppCompatActivity implements SearchStore.Dat
 
     @Override
     public void onItems(@NonNull List<Result> results) {
-        Log.v("TAG", "Items!");
+        viewModel.setEmptyState(SearchViewModel.NOT_EMPTY);
     }
 
     @Override

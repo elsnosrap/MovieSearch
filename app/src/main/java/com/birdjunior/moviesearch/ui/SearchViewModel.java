@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.support.annotation.IntDef;
+import android.view.View;
 
 import com.birdjunior.moviesearch.BR;
 import com.birdjunior.moviesearch.R;
@@ -35,6 +36,19 @@ public class SearchViewModel extends BaseObservable {
     void setEmptyState(@EmptyState int emptyState) {
         this.emptyState = emptyState;
         notifyPropertyChanged(BR.hintText);
+        notifyPropertyChanged(BR.noResultsVisibility);
+    }
+
+    @Bindable
+    public int getNoResultsVisibility() {
+        switch (emptyState) {
+            case SEARCH_NO_RESULTS:
+            case SEARCH_START:
+                return View.VISIBLE;
+
+            default:
+                return View.GONE;
+        }
     }
 
     @Bindable

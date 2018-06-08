@@ -20,7 +20,8 @@ public final class OkHttpFactory {
     // Cache size
     private static final long CACHE_SIZE = 10 * 1024 * 1024;
 
-    private OkHttpFactory() {}
+    private OkHttpFactory() {
+    }
 
     public static OkHttpClient getClient(Context context) {
         // Use OkHttp for network requests
