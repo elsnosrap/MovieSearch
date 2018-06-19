@@ -16,7 +16,7 @@ We’d like you to create an Android app that allows the user to search for a mo
 
 Use OMDB movie database: https://www.omdbapi.com/
 
-With this API Key: ee60b1cc
+With this API Key: \<redacted\> 
 
 Display the results to the user, with at least the image of the movie poster (or any image provided by the api) and the title of the movie. There is no requirement for any persistence.
 
