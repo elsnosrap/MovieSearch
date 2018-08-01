@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply from: "$project.rootDir/tools/findbugs.gradle"
 
 android {
     compileSdkVersion 27
