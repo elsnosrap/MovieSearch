@@ -1,6 +1,6 @@
 apply plugin: 'findbugs'
 
-task findbugs(type: FindBugs) {
+task findbugs(type: FindBugs, dependsOn: "assembleDebug") {
     description 'Runs FindBugs'
     group 'verification'
     excludeFilter = file("$project.rootDir/tools/rules-findbugs.xml")
